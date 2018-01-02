@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block body %}
+<br>
+<br>
+<br>
+<h2>Please Register to enjoy all our features</h2>
+<br>
+<br>
+<br>
+<form method="post">
+
+    {{ form.as_p }}
+    {% csrf_token %}
+    <button class="btn btn-primary" type="submit">Register</button>
+</form>
+
+{% endblock %}

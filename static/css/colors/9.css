@@ -1,0 +1,54 @@
+
+/*Optional*/
+.multiselect-container li.active a {
+  color: #fff !important;
+}
+
+.multiselect-container li.active a label{
+    opacity: 1;
+}
+
+.messages-list .unread .message-sender, .messages-list .unread .message-time {
+    color: #f5f5f5;
+}
+
+.dropdown-menu li:last-child a {
+  color: #fff;
+}
+
+
+/*Main-Color*/
+.carousel-indicators li.active,.checkbox-primary input[type="checkbox"]:checked + label::before,.checkbox-primary input[type="checkbox"]:checked + label::before, .checkbox-primary input[type="radio"]:checked + label::before  , .multiselect-container li.active a, .messages-list .unread, .fixed-one-page, #menu-header, .btn-blue, .pagination>.active>a, .pagination>.active>span, .pagination>.active>a:hover, .pagination>.active>span:hover, .pagination>.active>a:focus, .pagination>.active>span:focus, .dropdown-menu li:last-child {
+	background-color: #06242e !important;
+}
+
+.messages-list .message-btn {
+  color: #06242e;
+}
+
+.custom-navbar {
+  border-top: 5px #06242e solid;
+}
+
+
+/*Darker-color*/
+.btn-blue:hover, .btn-blue:focus, .messages-list li.unread:hover, .dropdown-menu>li:last-child>a:hover, .dropdown-menu>li:last-child>a:focus {
+  background-color: #0c4055 !important;
+}
+
+.messages-list .unread,.checkbox-primary input[type="checkbox"]:checked + label::before,.checkbox-primary input[type="checkbox"]:checked + label::before, .checkbox-primary input[type="radio"]:checked + label::before  , .fixed-one-page, .pagination>.active>a, .pagination>.active>span, .pagination>.active>a:hover, .pagination>.active>span:hover, .pagination>.active>a:focus, .pagination>.active>span:focus, .checkbox-primary input[type="checkbox"]:checked + label::before {
+  border-color: #0c4055 !important;
+}
+
+
+/*Darkest-color*/
+.btn-blue:active, .dropdown-menu>li:last-child>a:active {
+    background: #0c7f9c !important;
+}
+
+
+/*Sub-color  OPTIONAL*/
+.product-box h2 span {
+  color: #fff;
+  background: #fe0036;
+}

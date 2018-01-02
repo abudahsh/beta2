@@ -1,0 +1,90 @@
+{% extends 'base.html'%}
+{% load education_filters %}
+{% block title%}
+{{course.name }} Page
+{% endblock %}
+{% block body %}
+
+<div class="container">
+	<div class="row">
+		<div class="col-4 offeset-md-4">
+		<h1>{{ course.name }}, {{ course.school }}</h1>
+	</div>
+	</div>
+	<div class="row">
+	<div class="col-3 mt-5">
+		<div class="row" style="background-color: blue" >
+		<h1>Wrtie The Code Of The Student To Take Attendance</h1>
+		<form method="post" action="{% url 'edu:take_attend' course.id %}">
+		    {% csrf_token %}
+		    {{ form.as_p }}
+		    <button type="submit" class="btn btn-danger">Take Student Attendance</button>
+		</form>
+	</div>
+		<div class="row mt-5" style="background-color: green">
+			<h1>Create New Exam</h1>
+		<form method="post" action="{% url 'edu:create_exam' course.id %}">
+		    {% csrf_token %}
+		    {{ form2.as_p }}
+		    <button type="submit" class="btn btn-danger">Create New Exam</button>
+		</form>
+	</div>
+	</div>
+	
+<div class="col-4 mt-5">
+<table class="table table-dark">
+  <thead class="thread-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Student name</th>
+      <th scope="col">Code</th>
+      <th scope="col">No. Attendances</th>
+    </tr>
+  </thead>
+  <tbody>
+    <span style="background-color: green">Top Student Attendance score : {{ top_attend.num_attend__max }}</span>
+
+  	{% for student in students %}
+    
+    <tr>
+      <th scope="row">{{ forloop.counter }}</th>
+      <td>{{ student.user.username }}</td>
+      <td>{{ student.code}}</td>
+      <td>{% student_attend_count student course %}</td>
+    </tr>
+{% endfor %}
+  </tbody>
+</table>
+</div>
+<div class="row mt-5">
+{% for exam in course.exams.all %}
+
+
+
+<div class="col-4  mt-5">
+<h6>{{exam|truncatechars:29 }}</h6>
+<table class="table ">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Student name</th>
+      <th scope="col">Code</th>
+      <th scope="col">Degree</th>
+    </tr>
+  </thead>
+  <tbody>
+  	{% for record in exam.examrecords.all %}
+    <tr>
+      <th scope="row">{{ forloop.counter }}</th>
+      <td>{{ record.student }}</td>
+      <td>{{ record.student.code}}</td>
+      <td>{{ record.student_degree }}</td>
+    </tr>
+{% endfor %}
+  </tbody>
+</table>
+</div>
+
+{% endfor%}	
+</div>
+{% endblock %}

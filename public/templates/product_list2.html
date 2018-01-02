@@ -1,0 +1,169 @@
+{% extends 'base2.html' %}
+{% block body %}
+
+<div class="row search-row">
+        <div class="col-md-3 search-filters" id="leftCol">
+
+                <!--ul class="nav nav-stacked" id="sidebar" data-spy="affix" data-offset-top="272" data-offset-bottom="190"-->
+                <ul class="nav nav-stacked" id="sidebar">
+                  <li>
+                    <a data-toggle="collapse" href="#category">التصنيفات الفرعية<i class="fa fa-minus change-icon" aria-hidden="true"></i></a>
+                    <div id="category" class="panel-collapse collapse in no-transition">
+                        <ul>
+                            <li><a href="">حقائب <span>210</span></a></li>
+                            <li><a href="">فساتين <span>234</span></a></li>
+                            <li><a href="">أحذية <span>23</span></a></li>
+                        </ul>
+                    </div>
+                  </li><!--
+                  --><li>
+                        <a data-toggle="collapse" href="#category1">الماركة<i class="fa fa-minus change-icon" aria-hidden="true"></i></a>
+                        <div id="category1" class="panel-collapse collapse in no-transition">
+                          <div class="filter-inputs">
+                            <select class="multi-select" multiple="multiple">
+                                <option value="activ">activ</option>
+                                <option value="addidas">addidas</option>
+                            </select>
+                          </div>
+                        </div>
+                  </li><!--
+                  --><li>
+                    <a data-toggle="collapse" href="#category2">المقاس<i class="fa fa-plus change-icon" aria-hidden="true"></i></a>
+                    <div id="category2" class="panel-collapse collapse no-transition">
+                      <div class="filter-inputs">
+                        <select class="multi-select" multiple="multiple">
+                                <option value="sm">sm</option>
+                                <option value="md">md</option>
+                                <option value="lg">lg</option>
+                                <option value="xlg">xlg</option>
+                                <option value="xxlg">xxlg</option>
+                                <option value="xxxlg">xxxlg</option>
+                            </select>
+                      </div>
+                    </div>
+                  </li><!--
+                  --><li>
+                    <a data-toggle="collapse" href="#category3">السعر<i class="fa fa-plus change-icon" aria-hidden="true"></i></a>
+                    <div id="category3" class="panel-collapse collapse no-transition">
+                      <div class="filter-inputs" style="padding:20px; direction:ltr;">
+                        <input type="text" class="price-slider" data-slider-id="price-slider" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[10,1000]" style="width:100%;" />
+                      </div>
+                    </div>
+                  </li><!--
+                  --><li>
+                    <a data-toggle="collapse" href="#category4">اللون<i class="fa fa-plus change-icon" aria-hidden="true"></i></a>
+                    <div id="category4" class="panel-collapse collapse no-transition">
+                      <div class="filter-inputs">
+                        <select class="multi-select" multiple="multiple">
+                                <option value="black">black</option>
+                                <option value="white">white</option>
+                                <option value="blue">blue</option>
+                                <option value="red">red</option>
+                                <option value="gray">gray</option>
+                                <option value="green">green</option>
+                            </select>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+
+          </div>
+          <div class="col-md-9 search-results" id="mainCol">
+                <div class="Pagination-container">
+                  <div class="row">
+                    <nav aria-label="Page navigation" class="pager-nav">
+                      <ul class="pagination">
+                        <li>
+                          <a href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                          </a>
+                        </li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li><a href="#">6</a></li>
+                        <li><a href="#">7</a></li>
+                        <li><a href="#">8</a></li>
+                        <li><a href="#">9</a></li>
+                        <li><a href="#">10</a></li>
+                        <li><a href="#">11</a></li>
+                        <li><a href="#">12</a></li>
+                        <li><a href="#">13</a></li>
+                        <li><a href="#">14</a></li>
+                        <li><a href="#">15</a></li>
+                        <li>
+                          <a href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                          </a>
+                        </li>
+                      </ul>
+                    </nav>
+                  </div>
+                </div>
+{% for product in products %}
+<div class="search-results-container">
+
+    <div class="row">
+
+                      <div class="col-sm-3 col-xs-6">
+
+                          <div class="product-box">
+
+                            <div class="image">
+                              <a href="#">
+                                <img src="{{ product.photo.url }}" alt="" height="220" width="177">
+                                <h2><span>47% off</span></h2>
+                              </a>
+                            </div>
+                            <div class="product-details">
+                              <a href="#" class="brand-name">{{ product.created_by }}</a>
+                              <a href="#" class="store-name">{{ product.name }}</a>
+                              <a href="#" class="info">{{ product.description }} </a>
+                              <a href="#" class="price">{{ product.price }}<span class="price-before">EGP 750</span></a>
+                            </div>
+                          </div>
+
+                      </div>
+    {% endfor %}
+<br>
+                  </div>
+</div>
+
+          </div>
+          <div class="col-md-9 search-results" id="mainCol">
+                <div class="Pagination-container">
+                  <div class="row">
+                    <nav aria-label="Page navigation" class="pager-nav">
+                      <ul class="pagination">
+                        <li>
+                          <a href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                          </a>
+                        </li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li><a href="#">6</a></li>
+                        <li><a href="#">7</a></li>
+                        <li><a href="#">8</a></li>
+                        <li><a href="#">9</a></li>
+                        <li><a href="#">10</a></li>
+                        <li><a href="#">11</a></li>
+                        <li><a href="#">12</a></li>
+                        <li><a href="#">13</a></li>
+                        <li><a href="#">14</a></li>
+                        <li><a href="#">15</a></li>
+                        <li>
+                          <a href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                          </a>
+                        </li>
+                      </ul>
+                    </nav>
+                  </div>
+                </div>
+{% endblock %}

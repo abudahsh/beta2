@@ -1,0 +1,44 @@
+{% extends 'base.html'%}
+{% block title%}
+{{course.name }} Page
+{% endblock %}
+{% block body %}
+<div class="container">
+	<div class="row">
+		<div class="col-4 offeset-md-4">
+		<h1> <span  class="badge badge-primary">{{ course.name }}</span>, <span class="badge badge-primary">{{ course.school }}</span></h1>
+	</div>
+	</div>
+	<div class="row mt-5">
+		<div class="col-4 ">
+		<ul class="list-group">
+			<li class="list-group-item active"> Course Notifications<h3></h3></li>
+			{% for notification in notifications %}
+			<li class="list-group-item"><h4>{{ notification.text }}</h4></li>
+			<li class="list-group-item"><h4>{{ notification.time_stamp|date }}</h4></li>
+			{% endfor %}
+		</ul>
+			</div>
+		
+	
+		<div class="col-7">
+			<ul class="list-group">
+			{% for question in questions %}
+				<li class="list-group-item active"><h3>  {{ question.title }} by <span style="color: purple">{{ question.asker }}</span></h3>
+					<p>{{ question.description }}</p></li>
+			
+				
+			{% for reply in question.replies.all %}
+				<li class="list-group-item"><h4>{{ reply.text }}</h4>
+				 <h5> by <span style="color: brown">{{ reply.replier }}</span> </h5> 
+				 <p>Likes <span class="badge badge-primary badge-pill">{{ reply.likes }}</span></p></li>
+				
+			{% endfor %}
+			{% endfor %}
+			</ul>
+		</div>
+
+	</div>
+</div>
+	
+{% endblock %}

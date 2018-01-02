@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<h1>Product List</h1>
+<br>
+<br>
+<br>
+<br>
+
+ <div class="album text-muted">
+      <div class="container">
+          {% for product in products %}
+        <div class="row">
+          <div class="card">
+              <img src="{{ product.photo.url }}" alt="{{ product.created_by }}" height="320" width="250">
+              <h4>{{ product.name }}</h4>
+            <p class="card-text">{{ product.description }}</p>
+          </div>
+          {% endfor %}
+
+        </div>
+
+      </div>
+
+    </div>
+
+{% endblock %}

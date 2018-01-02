@@ -1,0 +1,11 @@
+{% extends 'base.html'%}
+{% block body %}
+<div class="row">
+{% for course in courses%}
+<div class="col-4 offset-md-1  mt-5">
+{% include "snippets/course_card.html" with title=course.name school=course.school url=course.get_absolute_url %}
+</div>
+{% endfor %}
+
+</div>
+{% endblock %}

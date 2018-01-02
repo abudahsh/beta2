@@ -1,0 +1,11 @@
+.box-title, .product-box .category a, .btn-orange {
+	background-color: #f36726;
+}
+
+.product-info a.product-price, .product-box .category a:hover, .box .box-title-img a:hover,.box .box-title-img a:focus, a:focus, a:hover,.image-radius-box .info-box a.category:hover, .image-radius-box .info-box a.category:focus {
+	color: #f36726;
+}
+
+.name-box:hover span{
+	color: #f36726;
+}

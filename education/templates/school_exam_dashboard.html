@@ -1,0 +1,58 @@
+{% extends 'base.html'%}
+{% block body %}
+<div class="container">
+	<div class="row">
+		<div class="col-3 offset-md-4">
+			<h1>{{ course.name }}, {{ course.school }}</h1>
+
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-5 mt-5" style="background-color: blue">
+			<h2>Wrtie The Code Of The Student and Degree </h2>
+			<h3 style="color: white">Max degree is {{ exam.max_mark }}</h3>
+			<form method="post" action="{% url 'edu:create_exam_record' course.id exam.id %}">
+			    {% csrf_token %}
+			    {{ form.as_p }}
+			    <button type="submit" class="btn btn-danger">Take Student Attendance</button>
+			</form>
+		</div>
+		
+
+		<div class="col-5 mt-5 offset-md-2">
+			
+		
+		<table class="table ">
+		  <thead>
+		    <tr>
+		      <th scope="col">#</th>
+		      <th scope="col">Student name</th>
+		      <th scope="col">Code</th>
+		      <th scope="col">Degree</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		  	{% for record in records %}
+		    <tr>
+		      <th scope="row">{{ forloop.counter }}</th>
+		      <td style="font-size: 120%">{{ record.student }}</td>
+		      <td style="font-size: 120%">{{ record.student.code}}</td>
+
+		      	{% if forloop.counter == 1 %}
+
+					<td style="color: green; background-color: yellow; font-size: 120%">{{ record.student_degree }}</td>
+				{% else %}
+					<td style="font-size: 120%">{{ record.student_degree }}</td>
+				
+				{% endif %}
+				{% endfor %}
+		      
+		    </tr>
+
+		
+
+		</div>
+		</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,96 @@
+
+/*Optional*/
+.multiselect-container li.active a {
+  color: #f36726 !important;
+}
+
+.multiselect-container li.active a label{
+    /*opacity: .54;*/
+}
+
+.messages-list .unread .message-sender, .messages-list .unread .message-time {
+    color: #666;
+}
+
+.messages-list .unread {
+  background-color: #e0e0e0;
+  border-bottom: 1px solid #dedede;
+  color: #666;
+}
+
+/*Main-Color*/
+.slinput>select,
+.carousel-indicators li.active,
+.checkbox-primary input[type="checkbox"]:checked + label::before,
+.checkbox-primary input[type="radio"]:checked + label::before ,
+.fixed-one-page,
+.btn-blue,
+.btn-blue:focus,
+.pagination>.active>a,
+.pagination>.active>span,
+.pagination>.active>a:hover,
+.pagination>.active>span:hover,
+.pagination>.active>a:focus,
+.pagination>.active>span:focus{
+	background-color: #F36726 !important;
+}
+
+ul.navbar-right li:first-child a.dropdown-toggle, ul.navbar-right li:first-child span{
+  -webkit-transition: color 0s ease;
+  -moz-transition:    color 0s ease;
+  -ms-transition:     color 0s ease;
+  -o-transition:      color 0s ease;
+  font-weight: 700;
+}
+
+.main-dropdown-toggle {
+  color: #666 !important;
+}
+
+
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:hover, .navbar-default .navbar-nav>.open>a:focus {
+  background-color: #F36726;
+  color: #fff !important;
+}
+
+.btn-blue.inverse, .messages-list .message-btn,.store-data h2 {
+  color: #F36726;
+}
+
+.custom-navbar {
+  border-top: 5px #F36726 solid;
+  
+  border-top: 0 !important;
+}
+
+
+.btn-blue:hover{
+  background-color: #fff !important;
+  color: #fd9047 !important;
+}
+
+/*Darker-color*/
+.messages-list li.unread:hover {
+  background-color: #d0d0d0 !important;
+}
+
+.checkbox-primary input[type="checkbox"]:checked + label::before, .checkbox-primary input[type="radio"]:checked + label::before , .fixed-one-page, .pagination>.active>a, .pagination>.active>span, .pagination>.active>a:hover, .pagination>.active>span:hover, .pagination>.active>a:focus, .pagination>.active>span:focus {
+  border-color: #f8882b !important;
+}
+
+
+/*Darkest-color*/
+.btn-blue:active {
+    background: #fd9047 !important;
+    color: #fff;
+}
+
+
+/*Sub-color  OPTIONAL*/
+.product-box h2 span {
+  color: #f36726;
+  background: #fafafa;
+  top: 10px;
+  position: relative;
+  padding: 4px 7px;
+}

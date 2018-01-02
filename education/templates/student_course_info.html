@@ -1,0 +1,50 @@
+{% extends 'base.html'%}
+{% load education_filters %}
+{% block body %}
+
+<div class="container">
+	<div class="row">
+		<div class="col-4 offset-md-4">
+			<h1><span class="badge badge-primary">{{ course.name }}</span></h1>
+			<h2>  Page OF: <span class="badge badge-primary" style="color: rgb(101,205,227);">{{ student }}</span></h2>
+		</div>
+	</div>
+
+	<div class="row mt-5">
+		<div class="col-6">
+			<ul class="list-group">
+			<li class="list-group-item active"><h2>The number of times attended the course: {{ attendances.count }}</h2></li>
+			
+			{% for attendance in attendances %}
+			<li class="list-group-item">{{ attendance }}</li>
+
+			
+			{% endfor %}
+
+		</div>
+		<div class="col-4 offset-md-1">
+			<ul class="list-group">
+			<li class="list-group-item active"><h2>Your Exam Results</h2></li>
+			
+			{% for record in exam_records %}
+			<li class="list-group-item">{{ record }}</li>
+			{% endfor %}
+			
+			
+			</ul>
+			<div class="row mt-5" style="background-color: rgb(101,205,227); "><h4>Total student degrees <span style="color: green">{{ aggregate_student }}</span>  out of <span style="color: red">{{ aggregate_exams}} </span>degrees.</h4>
+			<h4>Student Exam Precentage is <span style="color: green">{{ precentage }} %</span>.</h4></div>
+			
+			{{ taleb }}
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+{% endblock %}

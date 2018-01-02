@@ -1,0 +1,54 @@
+{% extends 'base.html'%}
+{% load education_filters %}
+{% block body%}
+
+<div class="container">
+	<div class="row mb-5">
+		<div class="col-4 offeset-md-4">
+		<h1>Student <span class="badge badge-primary">{{ student.user.username }}</span>
+			<span class="badge badge-danger">{{ student.code }}</span></h1>
+	</div>
+	</div>
+{% for course in courses %}
+	
+	<div class="row">
+		<div class="row">
+		<div class="col-6"><h2><span class="badge badge-primary">{{ course }}</span></h2></div>
+		</div>
+		<div class="row mt-5">
+		<div class="col-6 mt-4 offset-md-1">
+			<ul class="list-group">
+				<li class="list-group-item active"><h2>Your Exam records</h2></li>
+				     
+		
+    		
+			{% for record in student.examrecords.all %}
+
+			{% if record.exam.course == course %}
+					<li class="list-group-item">{{ record }}</li>
+
+				{% endif %}
+			</ul>
+			{% endfor %}
+{{ aggregate }}
+
+		</div>
+		<div class="col-4">
+			<ul class="list-group">
+			<li class="list-group-item active"><h2>The number of times attended the course: {{ attendances.count }}</h2></li>
+			
+			{% for attendance in attendances %}
+			<li class="list-group-item">{{ attendance }}</li>
+		</ul>
+			
+			{% endfor %}
+
+		</div>
+		</div>
+		
+	</div>
+
+</div>
+	
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+
+
+    <title> Home Page</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  </head>
+
+<body>
+
+	<div class="nav-bar">
+		<div class="container-fluid">
+			<h1>Hi</h1>
+		</div>
+	</div>
+	<div class="banner">
+		<div class="container">
+			<div class="row mx-auto">
+			<img  src="https://static1.squarespace.com/static/54ee0cc0e4b0d8b0f5054ff6/t/562af8d9e4b00876a0443169/1424988340743/Mountain_View_Stanley_Vacation_Rental-001.jpg?">
+		</div>
+		<div class="row">
+		<div class="col-4 mx-auto">
+		<a class="btn btn-success" id="lol" style="padding-left: 30px; padding-right: 30px; border-radius: 20px" href="#">Download Here</a>
+		</div>
+		</div>
+	</div>
+		</div>
+	
+
+</body>
+
+<div class='col-4 mx-auto'>
+	<h1 >Abdo</h1>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		var $h1=$('h1')
+		if ($h1.text()=='Hi'){
+		console.log($h1.css('color'))
+		}
+		else{
+			console.log($h1.css('width'))
+		}
+	})
+	var $h1=$('h1')
+	var $a =$('#lol')
+	$h1.click(function(event){
+
+		$h1.css('color', 'green')
+
+		$a.css('background-color', 'red')
+	})
+
+</script>
+</html>

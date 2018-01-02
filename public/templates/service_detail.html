@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block body %}
+
+{{ service.name }}
+{{ service.description }}
+<img src="{{ service.photo.url }}" height="100" width="120">
+<br>
+<br>
+{% for product in products %}
+{{ product.name  }}
+{{ product.price }}
+<img src="{{ product.photo.url }}" height="100" width="120">
+<br>
+{% endfor %}
+<br>
+<h2>Reviews </h2>
+{% for review in reviews %}
+{{ review.body }}
+{{ review.created_by }}
+{{ review.created_at }}
+{{ review.useful }}
+<br>
+{% endfor %}
+<form method="post" action="{% url 'public:service_review_creation' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit Review</button>
+</form>
+{% endblock %}
