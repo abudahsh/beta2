@@ -51,11 +51,10 @@ class CourseViewForSchool(TemplateView):
         attendances = AttendanceRecord.objects.filter(course=course)
 
         context['attendances'] = attendances
-        context['students']= students=course.student.filter(attendances__course=course).annotate(num_attend=Count('attendances')).order_by('-num_attend')
+        context['students']= students=course.student.filter(attendances__course=course).(annotate(num_attend=Count('attendances')).order_by('-num_attend')
         context['top_attend']=course.student.filter(attendances__course=course).annotate(num_attend=Count('attendances')).aggregate(Max('num_attend'))
         context['form']=TakeAttendForm
         context['form2']=CreateExamForm
-        
         return context
 
 class AddingStudentView(FormView):
