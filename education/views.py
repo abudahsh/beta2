@@ -1,13 +1,13 @@
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, redirect
 import datetime
-from django.db.models import Max, Sum, Count
+from django.db.models import Max, Sum, Count, Q
 # Create your views here.
 
 from django.urls import reverse_lazy
 from django.views.generic import ListView, TemplateView, FormView, DetailView, CreateView
 
-from education.forms import AddingStudentForm, CreateStudentForm, TakeAttendForm, ExamRecordForm, CreateExamForm
+from education.forms import AddingStudentForm, CreateStudentForm, TakeAttendForm, ExamRecordForm, CreateExamForm,AttendanceFilterForm
 from education.mixins import  TeacherCannotSeeOtherCoursesDashboardMixin
 from education.models import Course, Student, AttendanceRecord, Exam, ExamRecord, Question,Notification,StudentReport
 
@@ -51,10 +51,12 @@ class CourseViewForSchool(TemplateView):
         attendances = AttendanceRecord.objects.filter(course=course)
 
         context['attendances'] = attendances
-        context['students']= students=course.student.filter(attendances__course=course).(annotate(num_attend=Count('attendances')).order_by('-num_attend')
+        context['students']= students=course.student.filter(attendances__course=course).annotate(num_attend=Count('attendances')).order_by('-num_attend')
         context['top_attend']=course.student.filter(attendances__course=course).annotate(num_attend=Count('attendances')).aggregate(Max('num_attend'))
+        context['records']=ExamRecord.objects.filter(exam__course=course).annotate(top_stud=Max('student_degree')).order_by('-top_stud')
         context['form']=TakeAttendForm
         context['form2']=CreateExamForm
+        
         return context
 
 class AddingStudentView(FormView):
@@ -86,10 +88,22 @@ class StudentCourseInfoView(TemplateView):
         context['student']=student = get_object_or_404(Student, code=self.kwargs['student_code'])
         context['attendances']=AttendanceRecord.objects.filter(course=course, student=student)
         context['exams']=exams=Exam.objects.filter(course=course)
-        records=ExamRecord.objects.filter(student=student).filter(exam__course=course)
+
+        for k,vals in self.request.GET.lists():
+            for v in vals:
+                context['attendances']=AttendanceRecord.objects.filter(course=course, student=student).filter( Q(attend_time__gte=v))
+                context['exams']=exams=Exam.objects.filter(course=course ,exam_time__gte=v)
+                records=ExamRecord.objects.filter(student=student).filter(exam__course=course ,exam__exam_time__gte=v).annotate(top_stud=Max('student_degree')).order_by('-top_stud')
+                context['exam_records']=records
+                context['aggregate_student']=ExamRecord.objects.for_student(student.pk).for_course(course.pk).filter(exam__exam_time__gte=v).aggregate(student_degree=Sum('student_degree'))
+                context['aggregate_exams']=Exam.objects.filter(course=course ,exam_time__gte=v).aggregate(Max_Degree=Sum('max_mark'))
+                return context
+        
+        records=ExamRecord.objects.filter(student=student).filter(exam__course=course).annotate(top_stud=Max('student_degree')).order_by('-top_stud')
         context['exam_records']=records
-        context['aggregate_student']=ExamRecord.objects.for_student(student.pk).for_course(course.pk).aggregate(Student_Degree=Sum('student_degree'))
+        context['aggregate_student']=ExamRecord.objects.for_student(student.pk).for_course(course.pk).aggregate(student_degree=Sum('student_degree'))
         context['aggregate_exams']=Exam.objects.filter(course=course).aggregate(Max_Degree=Sum('max_mark'))
+        context['form']=AttendanceFilterForm
         return context
         
         
@@ -194,9 +208,8 @@ class SchoolExamDashboardView(TemplateView):
         context['course']=course=get_object_or_404(Course, pk=self.kwargs['course_pk'])
         context['exam']=exam=get_object_or_404(Exam, pk=self.kwargs['exam_pk'])
         context['form']= ExamRecordForm
-        context['students']=students=Student.objects.filter(course=course)
+        context['students']=students=Student.objects.filter(courses=course)
         context['exams']=Exam.objects.annotate(top_stud=Max('examrecords__student_degree'))
-        context['records']=ExamRecord.objects.filter(exam=exam).annotate(top_stud=Max('student_degree')).order_by('-top_stud')
         return context
 
 

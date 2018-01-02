@@ -30,9 +30,10 @@
 		</form>
 	</div>
 	</div>
-	
+
+
 <div class="col-4 mt-5">
-<table class="table table-dark">
+<table class="table table-hover table-bordered table-inverse">
   <thead class="thread-dark">
     <tr>
       <th scope="col">#</th>
@@ -50,6 +51,8 @@
       <th scope="row">{{ forloop.counter }}</th>
       <td>{{ student.user.username }}</td>
       <td>{{ student.code}}</td>
+    <!-- Template Tag to return the count of attendances for specific course object and student (source education_filters) !-->
+
       <td>{% student_attend_count student course %}</td>
     </tr>
 {% endfor %}
@@ -59,26 +62,40 @@
 <div class="row mt-5">
 {% for exam in course.exams.all %}
 
+{{ exam.top_stud}}
 
-
-<div class="col-4  mt-5">
-<h6>{{exam|truncatechars:29 }}</h6>
-<table class="table ">
+<div class="col-3  mt-5">
+<h6 class="mx-auto"><a href="{{ exam.get_absolute_url }}">{{exam|truncatechars:29 }}</a></h6>
+<table class="table-hover table-bordered " style="border-color: green ">
   <thead>
     <tr>
-      <th scope="col">#</th>
+      <th scope="col" s>#</th>
       <th scope="col">Student name</th>
       <th scope="col">Code</th>
       <th scope="col">Degree</th>
     </tr>
   </thead>
   <tbody>
-  	{% for record in exam.examrecords.all %}
+    <!-- Template Tag to return ordered records from an exam object (source education_filters) !-->
+    {% exam_records_ordered exam as records %}
+  	{% for record in  records  %}
     <tr>
-      <th scope="row">{{ forloop.counter }}</th>
-      <td>{{ record.student }}</td>
-      <td>{{ record.student.code}}</td>
-      <td>{{ record.student_degree }}</td>
+      <th scope="row" style="padding: 5px">{{ forloop.counter }}</th>
+      <td style="padding: 5px">{{ record.student }}</td>
+      <td style="padding: 5px">{{ record.student.code}}</td>
+        {% if forloop.counter == 1 %}
+
+          <td style="color: green; background-color: yellow; font-size: 120%">{{ record.student_degree }}</td>
+        {% else %}
+          <td style="font-size: 120%">{{ record.student_degree }}</td>
+    </tr>
+        {% endif %}
+    {% empty %}
+    <tr>
+      <th scope="row">-</th>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
     </tr>
 {% endfor %}
   </tbody>

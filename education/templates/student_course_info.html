@@ -9,7 +9,12 @@
 			<h2>  Page OF: <span class="badge badge-primary" style="color: rgb(101,205,227);">{{ student }}</span></h2>
 		</div>
 	</div>
-
+	<div class="row">
+		<form method="get" >
+			{{ form.as_p }}
+			<button type="submit">Filter Results</button>
+		</form>
+	</div>
 	<div class="row mt-5">
 		<div class="col-6">
 			<ul class="list-group">
@@ -32,7 +37,7 @@
 			
 			
 			</ul>
-			<div class="row mt-5" style="background-color: rgb(101,205,227); "><h4>Total student degrees <span style="color: green">{{ aggregate_student }}</span>  out of <span style="color: red">{{ aggregate_exams}} </span>degrees.</h4>
+			<div class="row mt-5" style="background-color: rgb(101,205,227); "><h4>Total student degrees <span style="color: green">{{ aggregate_student }}</span>  out of <span style="color: red">{{ aggregate_exams }} </span>degrees.</h4>
 			<h4>Student Exam Precentage is <span style="color: green">{{ precentage }} %</span>.</h4></div>
 			
 			{{ taleb }}

@@ -37,3 +37,9 @@ class ExamRecordForm(forms.ModelForm):
     class Meta:
         model=ExamRecord
         fields=['code','student_degree']
+
+
+class AttendanceFilterForm(forms.Form):
+    From=forms.DateTimeField()
+    To=forms.DateTimeField()
+    

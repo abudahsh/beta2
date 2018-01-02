@@ -75,7 +75,7 @@ class Course(models.Model):
     groups=models.TextField(null=True)
     school=models.ForeignKey(School)
     year=models.CharField(max_length=30,choices=years)
-    student=models.ManyToManyField(Student , related_name='students')
+    student=models.ManyToManyField(Student , related_name='courses')
 
     def __str__(self):
         return self.name
@@ -89,6 +89,9 @@ class Exam(models.Model):
     name=models.CharField(max_length=60, null=True, blank=True)
     exam_time=models.DateTimeField(auto_now_add=True,auto_now=False, editable=True)
     max_mark=models.FloatField()
+
+    def get_absolute_url(self):
+        return reverse('edu:exam_detail', args=[self.course.id ,self.id])
 
     def __str__(self):
         if self.name:
