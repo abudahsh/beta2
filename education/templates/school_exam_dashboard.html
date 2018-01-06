@@ -15,7 +15,7 @@
 			<form method="post" action="{% url 'edu:create_exam_record' course.id exam.id %}">
 			    {% csrf_token %}
 			    {{ form.as_p }}
-			    <button type="submit" class="btn btn-danger">Take Student Attendance</button>
+			    <button type="submit" class="btn btn-danger">Submit Student Degree</button>
 			</form>
 		</div>
 		

@@ -113,7 +113,7 @@ class ExamRecord(models.Model):
         return str(self.student) +' got ' +str(self.student_degree) + ' on Exam' +' from '+str(self.exam.max_mark)
 
 class AttendanceRecord(models.Model):
-    course=models.ForeignKey(Course, related_name='records')
+    course=models.ForeignKey(Course, related_name='attendances')
     student = models.ForeignKey(Student, related_name='attendances')
     attend_time=models.DateTimeField(auto_now_add=True,auto_now=False, editable=True)
     update=models.DateTimeField(auto_now_add=False,auto_now=True, editable=True)

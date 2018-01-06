@@ -3,7 +3,10 @@
   <img class="card-img-top" src="https://sj-school.org/media/1/school-books-clip-art-emmaus_5821911e8c22d.jpg" height="200px";  style="padding-left: 70px; padding-right: 70px; background-color: green"  alt="Card image cap">
   <div class="card-body">
     <h5 class="card-title">Course: <span style="color: #44B78B; font-size: 130%">{{ title }}</span> </h5>
+   
     <p class="card-text">Course Provider: <span style="color:orange">{{ school }}</span></p>
+    <footer > Degrees: <span class="badge badge-danger badge-pill"><span style="color: yellow"> {{ student_degrees }}</span> / <span style="color: green">{{ exams_degrees }}</span>  % : <span style="color: white">{{ precentage }}</span></span></footer>
+
     <a href="{{ url }}" class="btn btn-primary">Go to course</a>
   </div>
 </div>

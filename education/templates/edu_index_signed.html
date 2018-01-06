@@ -1,11 +1,28 @@
 {% extends 'base.html'%}
+{% extends 'snippets/course_card.html'%}
+{% load education_filters %}
 {% block body %}
+
+{% if not courses %}
+<div class="container">
 <div class="row">
+<div class="col-6 mx-auto">
+<h1 class="mt-5 ml-5" style="color: #dd2d41"> Code: {{ request.user.student.code }}</h1>
+<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+</div>
+</div>
+</div>
+{% else%}
+<div class="row">
+{% block signed %}
 {% for course in courses%}
+{% student_course_exams_progress request.user.student course as exam_progress %}
 <div class="col-4 offset-md-1  mt-5">
-{% include "snippets/course_card.html" with title=course.name school=course.school url=course.get_absolute_url %}
+{% include "snippets/course_card.html" with title=course.name school=course.school url=course.get_absolute_url  student_degrees=exam_progress.student exams_degrees=exam_progress.exams precentage=exam_progress.precentage %}
 </div>
 {% endfor %}
 
 </div>
+{%endif%}
+{%endblock%}
 {% endblock %}

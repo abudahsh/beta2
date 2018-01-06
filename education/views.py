@@ -5,7 +5,7 @@ from django.db.models import Max, Sum, Count, Q
 # Create your views here.
 
 from django.urls import reverse_lazy
-from django.views.generic import ListView, TemplateView, FormView, DetailView, CreateView
+from django.views.generic import ListView, TemplateView, FormView, DetailView, CreateView, View
 
 from education.forms import AddingStudentForm, CreateStudentForm, TakeAttendForm, ExamRecordForm, CreateExamForm,AttendanceFilterForm
 from education.mixins import  TeacherCannotSeeOtherCoursesDashboardMixin
@@ -51,9 +51,12 @@ class CourseViewForSchool(TemplateView):
         attendances = AttendanceRecord.objects.filter(course=course)
 
         context['attendances'] = attendances
-        context['students']= students=course.student.filter(attendances__course=course).annotate(num_attend=Count('attendances')).order_by('-num_attend')
-        context['top_attend']=course.student.filter(attendances__course=course).annotate(num_attend=Count('attendances')).aggregate(Max('num_attend'))
-        context['records']=ExamRecord.objects.filter(exam__course=course).annotate(top_stud=Max('student_degree')).order_by('-top_stud')
+        context['students']= students=course.student.filter(
+            attendances__course=course).annotate(num_attend=Count('attendances')).order_by('-num_attend')
+        context['top_attend']=course.student.filter(
+            attendances__course=course).annotate(num_attend=Count('attendances')).aggregate(Max('num_attend'))
+        context['records']=ExamRecord.objects.filter(
+            exam__course=course).annotate(top_stud=Max('student_degree')).order_by('-top_stud')
         context['form']=TakeAttendForm
         context['form2']=CreateExamForm
         
@@ -91,17 +94,27 @@ class StudentCourseInfoView(TemplateView):
 
         for k,vals in self.request.GET.lists():
             for v in vals:
-                context['attendances']=AttendanceRecord.objects.filter(course=course, student=student).filter( Q(attend_time__gte=v))
+                context['attendances']=AttendanceRecord.objects.filter(
+                    course=course, student=student).filter( Q(attend_time__gte=v))
                 context['exams']=exams=Exam.objects.filter(course=course ,exam_time__gte=v)
-                records=ExamRecord.objects.filter(student=student).filter(exam__course=course ,exam__exam_time__gte=v).annotate(top_stud=Max('student_degree')).order_by('-top_stud')
+                records=ExamRecord.objects.filter(
+                    student=student).filter(
+                    exam__course=course ,exam__exam_time__gte=v).annotate(
+                    top_stud=Max('student_degree')).order_by('-top_stud')
                 context['exam_records']=records
-                context['aggregate_student']=ExamRecord.objects.for_student(student.pk).for_course(course.pk).filter(exam__exam_time__gte=v).aggregate(student_degree=Sum('student_degree'))
-                context['aggregate_exams']=Exam.objects.filter(course=course ,exam_time__gte=v).aggregate(Max_Degree=Sum('max_mark'))
+                context['aggregate_student']=ExamRecord.objects.for_student(
+                    student.pk).for_course(course.pk).filter(
+                    exam__exam_time__gte=v).aggregate(student_degree=Sum('student_degree'))
+                context['aggregate_exams']=Exam.objects.filter(course=course ,exam_time__gte=v).aggregate(
+                    Max_Degree=Sum('max_mark'))
                 return context
         
-        records=ExamRecord.objects.filter(student=student).filter(exam__course=course).annotate(top_stud=Max('student_degree')).order_by('-top_stud')
+        records=ExamRecord.objects.filter(student=student).filter(
+            exam__course=course).annotate(
+            top_stud=Max('student_degree')).order_by('-top_stud')
         context['exam_records']=records
-        context['aggregate_student']=ExamRecord.objects.for_student(student.pk).for_course(course.pk).aggregate(student_degree=Sum('student_degree'))
+        context['aggregate_student']=ExamRecord.objects.for_student(student.pk).for_course(course.pk).aggregate(
+            student_degree=Sum('student_degree'))
         context['aggregate_exams']=Exam.objects.filter(course=course).aggregate(Max_Degree=Sum('max_mark'))
         context['form']=AttendanceFilterForm
         return context
@@ -217,17 +230,9 @@ class StudentAllCoursesState(TemplateView):
     template_name = 'student_all_courses_state.html'
 
     def get_context_data(self, **kwargs):
-        total_student=0
-        total_max=0
         context=super().get_context_data(**kwargs)
-        context['total_student']=total_student
         context['student']=student = get_object_or_404(Student, code=self.kwargs['student_code'])
         context['courses']=courses=Course.objects.filter(student=student)
-        for course in courses:
-            context['attendances']=AttendanceRecord.objects.filter(course=course, student=student)
-            context['exams']=exams=Exam.objects.filter(course=course)
-            context['exam_records']=records=ExamRecord.objects.for_student(student.pk).for_course(course.pk)
-            context['aggregate']=ExamRecord.objects.for_student(student.pk).for_course(course.pk).aggregate(Sum('student_degree'))
         return context
 
 
@@ -238,5 +243,40 @@ class StudentCourseReport(TemplateView):
     context_object_name='report'
     def get_context_data(self, **kwargs):
         context=super().get_context_data(**kwargs)
-        context['report']=get_object_or_404(StudentReport, course=self.kwargs['course_pk'], student=self.kwargs['student_code'])
+        context['report']=get_object_or_404(StudentReport,
+        course=self.kwargs['course_pk'],
+        student=self.kwargs['student_code'])
         return context
+
+
+
+class StudentAjaxCourseView(View):
+    def get(self, request, *args, **kwargs):
+        data = {}
+        course=get_object_or_404(Course, pk=self.kwargs['course_pk'])
+        student=get_object_or_404(Student, pk=self.kwargs['student__code'])
+        qs = student.examrecords.filter(exam__course=course)
+        days = 7
+        start_date = timezone.now().today() - datetime.timedelta(days=days-1)
+        datetime_list = []
+        labels = []
+        salesItems = []
+        for x in range(0, days):
+            new_time = start_date + datetime.timedelta(days=x)
+            datetime_list.append(
+                    new_time
+                )
+            labels.append(
+                new_time.strftime("%a") # mon
+            )
+            new_qs = qs.filter(exam_time__day=new_time.day, exam_time__month=new_time.month)
+            for q in new_qs:
+                day_total = q.student_degree or 0
+                salesItems.append(
+                    day_total
+                )
+                
+
+        data['labels'] = labels
+        data['data'] = salesItems
+        return JsonResponse(data)

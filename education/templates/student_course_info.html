@@ -35,20 +35,96 @@
 			<li class="list-group-item">{{ record }}</li>
 			{% endfor %}
 			
-			
+			{% student_course_exams_progress student course as exam_progress %}
 			</ul>
-			<div class="row mt-5" style="background-color: rgb(101,205,227); "><h4>Total student degrees <span style="color: green">{{ aggregate_student }}</span>  out of <span style="color: red">{{ aggregate_exams }} </span>degrees.</h4>
-			<h4>Student Exam Precentage is <span style="color: green">{{ precentage }} %</span>.</h4></div>
+			<div class="row mt-5" style="background-color: rgb(101,205,227); "><h4>Total student degrees <span style="color: green">{{ exam_progress.student }}</span>  out of <span style="color: red">{{ exam_progress.exams }} </span>degrees.</h4>
+			<h4>Student Exam Precentage is <span style="color: green">{{ exam_progress.precentage }} %</span>.</h4></div>
 			
-			{{ taleb }}
+			
+			
 		</div>
 	</div>
 </div>
 
 
 
+<div class="row mt-5">
+<div class="col-5">
+<canvas id="student_exam_chart" width="400" height="400"></canvas>
+</div>
+<div class="col-5 offset-md-1">
+<canvas id="student_attendance_chart" width="400" height="400"></canvas>
+</div>
+</div>
+
+<script>
+var ctx = document.getElementById("student_attendance_chart").getContext('2d');
+{% student_course_exams_progress student course as exam_progress %}
+var mydata={{ exam_progress|safe }}
+var myChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: [mydata.student, mydata.exams ,mydata.precentage],
+        
+        datasets: [{
+            label: '# of Votes',
+            data: [mydata.student, mydata.exams],
+            
+            backgroundColor:['rgba(46.3, 86.3, 20.4)',
+            'rgba(71.4, 7.5, 18.8)'
+        ]            
+       
+        }]
+    }
+  
+  
+});
+</script>
 
 
+
+
+<script>
+var ctx = document.getElementById("student_exam_chart").getContext('2d');
+{% student_chart_exams_data student.code course.pk as exam_chart_data %}
+var mydata={{ exam_chart_data|safe }}
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: mydata.labels,
+        datasets: [{
+            label: 'Student Exam Degrees',
+            data: mydata.data,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+</script>
 
 
 

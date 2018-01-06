@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'^course/(?P<course_pk>\d+)/exam/(?P<exam_pk>\d+)/$', views.SchoolExamDashboardView.as_view(), name='exam_detail'),
     url(r'^course/(?P<course_pk>\d+)/(?P<student_code>\w+)/report/', views.StudentCourseReport.as_view(),name='student_course_report'),
     url(r'^course/(?P<course_pk>\d+)/(?P<student_code>\w+)/', views.StudentCourseInfoView.as_view(),name='student_course_info'),
+    url(r'^course/(?P<course_pk>\d+)/(?P<student_code>\w+)/ajax/', views.StudentAjaxCourseView,name='student_course_info_ajax'),
     url(r'^course/(?P<course_pk>\d+)/$', views.CourseViewForSchool.as_view(), name='course_dashboard'),
     url(r'^course/(?P<course_pk>\d+)/s$', views.CourseViewForParticipant.as_view(), name='course_dashboard_participant'),
 ]
