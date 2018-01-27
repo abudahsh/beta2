@@ -1,9 +1,13 @@
 {% extends 'base.html'%}
 {% load education_filters %}
+{% load static  %}
 {% block title%}
 {{course.name }} Page
 {% endblock %}
 {% block body %}
+
+
+{% include "school_dashboard_base.html" with course=course %}
 
 <div class="container">
 	<div class="row">
@@ -32,8 +36,8 @@
 	</div>
 
 
-<div class="col-4 mt-5">
-<table class="table table-hover table-bordered table-inverse">
+<div class="col-8 mt-5 ">
+<table class="table table-hover table-bordered table-rafeki">
   <thead class="thread-dark">
     <tr>
       <th scope="col">#</th>
@@ -46,7 +50,7 @@
     <span style="background-color: green">Top Student Attendance score : {{ top_attend.num_attend__max }}</span>
 
   	{% for student in students %}
-    
+
     <tr>
       <th scope="row">{{ forloop.counter }}</th>
       <td>{{ student.user.username }}</td>
@@ -102,6 +106,6 @@
 </table>
 </div>
 
-{% endfor%}	
+{% endfor%}
 </div>
 {% endblock %}

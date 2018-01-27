@@ -1,5 +1,6 @@
 {% extends 'base.html'%}
 {% block body %}
+<div class="courselist">
 
 <div class="row">
 {% for course in courses%}
@@ -7,5 +8,6 @@
 {% include "snippets/course_card.html" with title=course.name school=course.school url=course.get_absolute_url %}
 </div>
 {% endfor %}
+</div>
 </div>
 {% endblock %}

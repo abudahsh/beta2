@@ -1,47 +1,68 @@
 {% extends 'base.html'%}
 {% load education_filters %}
 {% block body %}
+<br>
 
-<div class="container">
-	<div class="row">
-		<div class="col-4 offset-md-4">
+<div class="mt-5" id='root'></div>
+<div   class="container">
+	<div class="row mt-5">
+		<div class="col-4 mx-auto">
 			<h1><span class="badge badge-primary">{{ course.name }}</span></h1>
 			<h2>  Page OF: <span class="badge badge-primary" style="color: rgb(101,205,227);">{{ student }}</span></h2>
 		</div>
 	</div>
 	<div class="row">
-		<form method="get" >
+		<form method="get" class="form-control">
 			{{ form.as_p }}
-			<button type="submit">Filter Results</button>
+			<button class="btn btn-primary mb-2" type="submit">Filter Results</button>
 		</form>
 	</div>
+
 	<div class="row mt-5">
-		<div class="col-6">
+		<div class="col-4">
 			<ul class="list-group">
-			<li class="list-group-item active"><h2>The number of times attended the course: {{ attendances.count }}</h2></li>
-			
+			<li class="list-group-item badge-primary"><h2>The number of times attended the course: {{ attendances.count }}</h2></li>
+
 			{% for attendance in attendances %}
-			<li class="list-group-item">{{ attendance }}</li>
+			<li class="list-group-item">{{ attendance.attend_time }}</li>
 
-			
+
 			{% endfor %}
-
+        </ul>
 		</div>
-		<div class="col-4 offset-md-1">
-			<ul class="list-group">
-			<li class="list-group-item active"><h2>Your Exam Results</h2></li>
-			
-			{% for record in exam_records %}
-			<li class="list-group-item">{{ record }}</li>
-			{% endfor %}
-			
+
+
+
+        <div class="col-5 ml-auto ">
+            <h4 class="mx-auto">الامتحانات والدرجات</h4>
+            <table class="table table-striped table-bordered table-hover table-inverse">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Exam</th>
+                  <th scope="col">Degree</th>
+
+                </tr>
+              </thead>
+              <tbody>
+               {% for record in exam_records %}
+                <tr>
+                  <th scope="row">{{ forloop.counter }}</th>
+                  <td>{{record.exam|truncatechars:60}}</td>
+                    <td> <span class="font-weight-bold" style="color: #dd2d41"> {{ record.student_degree }} </span>/ {{record.exam.max_mark}} </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+
+
 			{% student_course_exams_progress student course as exam_progress %}
 			</ul>
 			<div class="row mt-5" style="background-color: rgb(101,205,227); "><h4>Total student degrees <span style="color: green">{{ exam_progress.student }}</span>  out of <span style="color: red">{{ exam_progress.exams }} </span>degrees.</h4>
 			<h4>Student Exam Precentage is <span style="color: green">{{ exam_progress.precentage }} %</span>.</h4></div>
-			
-			
-			
+
+			</div>
+
 		</div>
 	</div>
 </div>
@@ -64,20 +85,20 @@ var mydata={{ exam_progress|safe }}
 var myChart = new Chart(ctx, {
     type: 'pie',
     data: {
-        labels: [mydata.student, mydata.exams ,mydata.precentage],
-        
+        labels: ['Student Degrees', 'Full Mark' ,mydata.precentage],
+
         datasets: [{
             label: '# of Votes',
             data: [mydata.student, mydata.exams],
-            
+
             backgroundColor:['rgba(46.3, 86.3, 20.4)',
             'rgba(71.4, 7.5, 18.8)'
-        ]            
-       
+        ]
+
         }]
     }
-  
-  
+
+
 });
 </script>
 
@@ -125,7 +146,5 @@ var myChart = new Chart(ctx, {
     }
 });
 </script>
-
-
 
 {% endblock %}

@@ -1,0 +1,83 @@
+{% load static  %}
+{% block dashnavbar %}
+
+<div class="container navbar2">
+	<div class="row mt-5 mb-3">
+		<div class="col-3">
+			<svg class="ml-4"  height="30" width="30">
+			 <img class="svg-search" src="{% static 'img/questions.svg'%}" style="height:70px; width:55px;"/>
+			</svg>
+			<br>
+			<button class="btn-rafeki" type="button" name="questions"><h4>questions</h4></button>
+
+		</div>
+		<div class="col-3">
+			<svg class="ml-2" height="30" width="30">
+			 <img class="svg-search" src="{% static 'img/marks.svg'%}" style="height:70px; width:55px;"/>
+			</svg>
+			<br>
+			<button class="btn-rafeki" type="button" name="marks"><h4>Marks</h4></button>
+
+		</div>
+		<div class="col-3">
+			<svg class="ml-4" height="30" width="30">
+			 <img class="svg-search" src="{% static 'img/students.svg'%}" style="height:70px; width:55px;"/>
+			</svg>
+			<br>
+			<button class="btn-rafeki" type="button" name="students"><h4>Students</h4></button>
+
+		</div>
+		<div class="col-3">
+			<svg class="ml-5"  height="30" width="30">
+			 <img class="svg-search" src="{% static 'img/student.svg'%}" style="height:70px; width:55px;"/>
+			</svg>
+			<br>
+			<button class="btn-rafeki" type="button" name="attendance"><h4>Attendance</h4></button>
+
+		</div>
+	</div>
+</div>
+
+{% endblock dashnavbar %}
+
+{% block dashmenu %}
+
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-4 ml-auto">
+      <form >
+        <select class="custom-select" name="menu-exam" onChange="window.document.location.href=this.options[this.selectedIndex].value;" value="GO">>
+        <option selected>Choose Exam</option>
+        {% for exam in course.exams.all %}
+            <option value="{% url 'edu:exam_detail' course_pk exam.pk %}">{{exam}}</option>
+            {% empty %}
+            <option value="99">You have no exams yet</option>
+        {% endfor %}
+
+      </select>
+      <button type="submit" name="button">Go</button>
+      </form>
+
+    </div>
+
+    <div class="col-4 ">
+      <form>
+        <select class="custom-select" name="menu-course" onChange="window.document.location.href=this.options[this.selectedIndex].value;" value="GO">>
+        <option selected>Choose Course</option>
+        {% for course in user.student.courses.all %}
+            <option value="{% url 'edu:course_dashboard' course.pk %}">{{course.name}}</option>
+            {% empty %}
+            <option value="99">You have no courses</option>
+        {% endfor %}
+
+      </select>
+      <button type="submit" name="button">Go</button>
+      </form>
+
+    </div>
+
+  </div>
+
+</div>
+
+{% endblock dashmenu %}

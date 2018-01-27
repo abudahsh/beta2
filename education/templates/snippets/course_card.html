@@ -1,12 +1,12 @@
-
+{% load static %}
 <div class="card" style="width: 18rem;">
-  <img class="card-img-top" src="https://sj-school.org/media/1/school-books-clip-art-emmaus_5821911e8c22d.jpg" height="200px";  style="padding-left: 70px; padding-right: 70px; background-color: green"  alt="Card image cap">
+  <img class="card-img-top" src="{% static 'img/shutterstock_199303319.jpg'%}"   alt="Card image cap">
   <div class="card-body">
-    <h5 class="card-title">Course: <span style="color: #44B78B; font-size: 130%">{{ title }}</span> </h5>
-   
-    <p class="card-text">Course Provider: <span style="color:orange">{{ school }}</span></p>
-    <footer > Degrees: <span class="badge badge-danger badge-pill"><span style="color: yellow"> {{ student_degrees }}</span> / <span style="color: green">{{ exams_degrees }}</span>  % : <span style="color: white">{{ precentage }}</span></span></footer>
+    <h6 class="card-text ">{{ school }}</h6>
+    <h5 class="card-title font-rafeki">{{ title }}</h5>
 
-    <a href="{{ url }}" class="btn btn-primary">Go to course</a>
+    <footer > Degrees: <span class="badge badge-primary badge-pill"><span > {{ student_degrees }}</span> / <span style="color: green">{{ exams_degrees }}</span>  % : <span style="color: white">{{ precentage }}</span></span></footer>
+
+    <a href="{{ url }}" class="btn btn-rafeki">Go to course</a>
   </div>
 </div>

@@ -1,6 +1,8 @@
 {% extends 'base.html'%}
 {% load education_filters %}
 {% block body %}
+{% include "school_dashboard_base.html" with course=course %}
+
 <div class="container">
 	<div class="row">
 		<div class="col-3 offset-md-4">
@@ -9,18 +11,43 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-5 mt-5" style="background-color: blue">
-			<h2>Wrtie The Code Of The Student and Degree </h2>
-			<h3 style="color: white">Max degree is {{ exam.max_mark }}</h3>
-			<form method="post" action="{% url 'edu:create_exam_record' course.id exam.id %}">
-			    {% csrf_token %}
-			    {{ form.as_p }}
-			    <button type="submit" class="btn btn-danger">Submit Student Degree</button>
-			</form>
-		</div>
-		
+<div class="col-2">
+	<!-- Button trigger modal -->
+	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+	  Take Exam Degrees
+	</button>
+
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+					<h2>Wrtie The Code Of The Student and Degree </h2>
+					<h3 style="color: white">Max degree is {{ exam.max_mark }}</h3>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+					<form method="post" action="{% url 'edu:create_exam_record' course.id exam.id %}">
+					    {% csrf_token %}
+					    {{ form.as_p }}
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        <button type="submit" class="btn btn-danger">Submit Student Degree</button>
+					</form>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</div>
+
+
+
+
 {% exam_records_ordered exam as records %}
-		<div class="col-5 mt-5 offset-md-2">			
+		<div class="col-8 mt-5 offset-md-2">
 		<table class="table table-hover table-bordered">
 		  <thead>
 		    <tr>
@@ -42,13 +69,13 @@
 					<td style="color: green; background-color: yellow; font-size: 120%">{{ record.student_degree }}</td>
 				{% else %}
 					<td style="font-size: 120%">{{ record.student_degree }}</td>
-				
+
 				{% endif %}
 				{% endfor %}
-		      
+
 		    </tr>
 
-		
+
 
 		</div>
 		</div>

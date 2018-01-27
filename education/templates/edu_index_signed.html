@@ -1,5 +1,5 @@
 {% extends 'base.html'%}
-{% extends 'snippets/course_card.html'%}
+
 {% load education_filters %}
 {% block body %}
 
@@ -23,6 +23,7 @@
 {% endfor %}
 
 </div>
+
+{%endblock signed%}
 {%endif%}
-{%endblock%}
-{% endblock %}
+{% endblock body %}

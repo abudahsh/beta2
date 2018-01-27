@@ -1,4 +1,4 @@
-from django.contrib.auth.base_user import AbstractBaseUser
+
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save, m2m_changed
 
@@ -17,25 +17,12 @@ def id_generator(size=5, chars=string.ascii_uppercase + 4*string.digits):
     codes.append(x)
     return x
 
-class BaseUser(AbstractBaseUser):
-
-    def get_student(self):
-        try:
-            return self.student
-        except:
-            return False
-
-    def get_teacher(self):
-        try:
-            return self.school
-        except:
-            return False
 
 
 class Student(models.Model):
     user = models.OneToOneField(User)
     study_at=models.CharField(max_length=70, null=True, blank=True)
-    code = models.CharField(max_length=5, null=False, primary_key=True, default=id_generator)
+    code = models.CharField(db_index=True, max_length=5, null=False, primary_key=True, default=id_generator)
 
 
 
@@ -87,7 +74,7 @@ class Course(models.Model):
 class Exam(models.Model):
     course=models.ForeignKey(Course, related_name='exams')
     name=models.CharField(max_length=60, null=True, blank=True)
-    exam_time=models.DateTimeField(auto_now_add=True,auto_now=False, editable=True)
+    exam_time=models.DateTimeField(db_index=True, auto_now_add=True,auto_now=False, editable=True)
     max_mark=models.FloatField()
 
     def get_absolute_url(self):
@@ -100,10 +87,10 @@ class Exam(models.Model):
 
 class ExamRecord(models.Model):
     exam=models.ForeignKey(Exam, related_name='examrecords')
-    exam_time=models.DateTimeField(auto_now_add=True,auto_now=False, editable=True)
-    student_degree=models.FloatField()
+    exam_time=models.DateTimeField(db_index=True, auto_now_add=True,auto_now=False, editable=True)
+    student_degree=models.FloatField(db_index=True,)
     student=models.ForeignKey(Student, related_name='examrecords')
-   
+
     objects=ExamRecordManager()
 
     class Meta:
@@ -115,7 +102,7 @@ class ExamRecord(models.Model):
 class AttendanceRecord(models.Model):
     course=models.ForeignKey(Course, related_name='attendances')
     student = models.ForeignKey(Student, related_name='attendances')
-    attend_time=models.DateTimeField(auto_now_add=True,auto_now=False, editable=True)
+    attend_time=models.DateTimeField(db_index=True, auto_now_add=True,auto_now=False, editable=True)
     update=models.DateTimeField(auto_now_add=False,auto_now=True, editable=True)
 
 
@@ -178,7 +165,7 @@ def update_report_exams(sender, instance, **kwargs):
     total_exams=0
     for exam in exams:
         total_exams+=exam.max_mark
-       
+
     instance.total_max_exam_degrees=total_exams
     instance.save()
 

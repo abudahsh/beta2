@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -7,12 +8,11 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>{% block title %}Beta Home Page{% endblock %}</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-
+    <title>{% block title %}Rafeki Home Page{% endblock %}</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+<!-- Chart.js CDN-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.js" type="text/javascript"></script>
@@ -20,9 +20,147 @@
 
 
   </head>
+
+  <div class="container">
+    <nav class="navbar navbar-expand-lg  rounded">
+      <a class="navbar-brand" href="#">Rafeki</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  <div class="collapse navbar-collapse" id="navbarsExample09">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Public</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Education</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown09" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">City</a>
+          <div class="dropdown-menu" aria-labelledby="dropdown09">
+            <a class="dropdown-item" href="#">Damanhour</a>
+            <a class="dropdown-item" href="#">Alexandria</a>
+            <a class="dropdown-item" href="#">Cairo</a>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+  </nav>
+
+  <nav class="navbar navbar-expand-lg  rounded navbar2">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample10" aria-controls="navbarsExample10" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample10">
+      <ul class="navbar-nav">
+
+        {% if not user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="#">الدعم</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " href="{% url 'accounts:register'%}">تسجيل</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'accounts:login' %}">تسجيل الدخول</a>
+        </li>
+        <form class="form-inline my-2 my-md-0">
+          <button class="btn btn-nav" type="submit" name="button"><svg height="30" width="30">
+           <img class="svg-search" src="{% static 'img/search.svg'%}" style="height:35px; width:35px;"/>
+          </svg></button>
+          <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+        </form>
+
+        {% elif user.student %}
+
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle dropdown-raf" href="http://example.com" id="dropdown09" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><svg height="20" width="20">
+           <img class="" src="{% static 'img/account.svg'%}" style="height:32px; width:32px;"/>
+         </svg></a>
+          <div class="dropdown-menu" aria-labelledby="dropdown09">
+            <a class="dropdown-item" href="{% url 'edu:signed_home'%}">Courses <svg height="20" width="20">
+             <img class="dropdown-icon" src="{% static 'img/courses.svg'%}" />
+           </svg></a>
+            <a class="dropdown-item" href="{% url 'edu:student_all_courses_state' request.user.student.pk %}">Progress <svg height="20" width="20">
+             <img class="dropdown-icon" src="{% static 'img/progress.svg'%}" /></a>
+            <a class="dropdown-item" href="#">Profile <svg height="20" width="20">
+             <img class="dropdown-icon" src="{% static 'img/account.svg'%}" />
+           </svg></a>
+            <a class="dropdown-item" href="#">Settings</a>
+            <a class="dropdown-item" href="{% url 'accounts:logout' %}">Logout</a>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#"><svg height="20" width="20">
+           <img class="svg" src="{% static 'img/notification-default.svg'%}" style="height:32px; width:32px;"/>
+          </svg></a>
+        </li>
+
+        <form class="form-inline my-2 my-md-0">
+          <a  href="#"><svg height="20" width="20">
+           <img class="svg-search" src="{% static 'img/search.svg'%}" style="height:32px; width:32px;"/>
+         </svg></a>
+          <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+        </form>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown10" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">courses</a>
+          <div class="dropdown-menu" aria-labelledby="dropdown10">
+            <a class="dropdown-item" href="#">{{ request.user.student.code }}</a>
+            {% for course in request.user.student.courses.all %}
+            <a class="dropdown-item" href="{% url 'edu:student_course_info' course.pk request.user.student.pk %}">{{ course.name }}</a>
+            {% endfor %}
+          </div>
+        </li>
+
+        {% elif user.is_authenticated %}
+
+        <li class="nav-item">
+          <a class="nav-link" href="#">notifications</a>
+        </li>
+
+        <form class="form-inline my-2 my-md-0">
+          <button class="btn btn-nav" type="submit" name="q"><svg height="20" width="20">
+           <img class="svg" src="{% static 'img/search.svg'%}" style="height:35px; width:35px;"/>
+          </svg></button>
+          <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+        </form>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown09" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><svg height="20" width="20">
+           <img class="svg" src="{% static 'img/account.svg'%}" style="height:35px; width:35px;"/>
+         </svg></a>
+          <div class="dropdown-menu" aria-labelledby="dropdown09">
+            <a class="dropdown-item" href="#">LOL</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a>
+            <a class="dropdown-item" href="{% url 'accounts:logout' %}">تسجيل الخروج</a>
+          </div>
+        </li>
+
+
+        {% endif %}
+      </ul>
+    </div>
+  </nav>
+
+
+
+
+
+
+
+
+<!--
+
 <div class="container mb-5">
 
-  <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse" >
+  <nav class="navbar navbar-toggleable-md  fixed-top " >
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -39,7 +177,21 @@
           <li class="nav-item">
             <a class="nav-link " href="{% url 'edu:not_signed_home' %}">Education</a>
           </li>
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+                  <button class="btn btn-nav" href="#"><svg height="20" width="20">
+                   <img class="svg" src="{% static 'img/account.svg'%}" style="height:20px; width:20px;"/>
+                 </svg></button>
+            </li>
+            {% endif%}
         </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <button class="btn btn-nav my-2 my-sm-0" type="submit"><svg height="20" width="20">
+           <img class="svg" src="{% static 'img/search.svg'%}" style="height:20px; width:20px;"/>
+          </svg></button>
+          <input class="form-control search-input mr-sm-2" type="text" placeholder="ابحث عن مكانك المفضل">
+
+        </form>
           <ul class="navbar-nav ml-auto">
             {% if user.is_authenticated %}
               <li class="nav-item">
@@ -65,7 +217,7 @@
                     <a class="nav-link " href="/account/register">Register</a>
                 </li>
             {% endif %}
-            
+
             {% if request.user.school %}
 
           <li class="nav-item dropdown">
@@ -80,7 +232,7 @@
             </div>
           </li>
         </ul>
-        
+
             {% elif request.user.student %}
           <li class="nav-item dropdown" >
             <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Student Menu</a>
@@ -94,18 +246,15 @@
           </li>
         </ul>
             {% endif %}
-        <form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="text" placeholder="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
+
       </div>
     </nav>
+
 </div>
 </div>
-
-
+-->
 <div class="container-fluid mt-5 mb-4" >
-  
+
 
     {% block body %}
       <!-- Main jumbotron for a primary marketing message or call to action -->
@@ -148,6 +297,8 @@
     {% endblock %}
 </div>
 
-</html>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
   </body>
 </html>

@@ -1,0 +1,97 @@
+
+.navbar2{
+  opacity: 0.9;
+  border-bottom:#ff1a4b 3px solid;
+
+}
+.nav-link{
+  color:#dd2d41;
+}
+.btn-rafeki-dark{
+  background-color: #ff1a4b;
+  border-radius: 20px;
+}
+
+.search-input{
+  border-radius: 30px;
+  background-color: #dfdddf;
+}
+
+.btn-rafeki{
+  
+  background-color:white;
+  color: black;
+  border-radius:10px;
+}
+.btn-rafeki:hover{
+  background-color:#ff1a4b;
+  color: white;
+}
+.btn-rafeki:active{
+  background-color: green;
+}
+
+.table-rafeki{
+  padding: 7px;
+  border-radius: 12px;
+  border: 2px solid #ff1a4b;
+  border-collapse : collapse;
+  font-size: 16px;
+  margin : 0 0 20px 20px;
+}
+tr:hover{
+  background-color: #ff1a4b;
+}
+
+td:hover{
+  background-color: #ff1a4b;
+}
+
+.btn-nav{
+  background-color: white;
+
+  width: 40px;
+  height: 40px;
+
+
+}
+
+.btn-nav:hover{
+  background-color: #ff1a4b;
+}
+
+.svg{
+  margin-left: -45px;
+  margin-right: 45px;
+  margin-top:-20px;
+}
+.font-rafeki{
+  color: #ff1a4b;
+}
+.dropdown-raf{
+  margin-right: 45px;
+  margin-top:-10px;
+}
+.dropdown-icon{
+  height: 25px;
+  width: 25px;
+  margin-left: 30px;
+}
+.dropdown-item:hover{
+  background-color: #ff1a4b;
+}
+
+.btn-primary{
+  background-color: #ff1a4b;
+  color: white;
+  border-radius: 15px;
+}
+.badge-primary{
+  background-color: #ff1a4b;
+  color: white;
+  border-radius: 15px;
+}
+.svg-search{
+  margin-left: -30px;
+  margin-top:-20px;
+}
