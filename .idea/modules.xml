@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/beta2.iml" filepath="$PROJECT_DIR$/.idea/beta2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../whisper/.idea/whisper.iml" filepath="$PROJECT_DIR$/../whisper/.idea/whisper.iml" />
     </modules>
   </component>
 </project>

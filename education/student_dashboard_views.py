@@ -35,45 +35,6 @@ class CourseViewForParticipant(TemplateView):
 
 
 
-class StudentCourseInfoView(TemplateView):
-
-    template_name = 'student_course_info.html'
-
-    def get_context_data(self, **kwargs):
-        total_student=0
-        total_max=0
-        context=super().get_context_data(**kwargs)
-        context['course']=course=get_object_or_404(Course, pk=self.kwargs['course_pk'])
-        context['student']=student = get_object_or_404(Student, code=self.kwargs['student_code'])
-        context['attendances']=AttendanceRecord.objects.filter(course=course, student=student)
-        context['exams']=exams=Exam.objects.filter(course=course)
-
-        for k,vals in self.request.GET.lists():
-            for v in vals:
-                context['attendances']=AttendanceRecord.objects.filter(
-                    course=course, student=student).filter( Q(attend_time__gte=v))
-                context['exams']=exams=Exam.objects.filter(course=course ,exam_time__gte=v)
-                records=ExamRecord.objects.filter(
-                    student=student).filter(
-                    exam__course=course ,exam__exam_time__gte=v).annotate(
-                    top_stud=Max('student_degree')).order_by('-top_stud')
-                context['exam_records']=records
-                context['aggregate_student']=ExamRecord.objects.for_student(
-                    student.pk).for_course(course.pk).filter(
-                    exam__exam_time__gte=v).aggregate(student_degree=Sum('student_degree'))
-                context['aggregate_exams']=Exam.objects.filter(course=course ,exam_time__gte=v).aggregate(
-                    Max_Degree=Sum('max_mark'))
-                return context
-
-        records=ExamRecord.objects.filter(student=student).filter(
-            exam__course=course).annotate(
-            top_stud=Max('student_degree')).order_by('-top_stud')
-        context['exam_records']=records
-        context['aggregate_student']=ExamRecord.objects.for_student(student.pk).for_course(course.pk).aggregate(
-            student_degree=Sum('student_degree'))
-        context['aggregate_exams']=Exam.objects.filter(course=course).aggregate(Max_Degree=Sum('max_mark'))
-        context['form']=AttendanceFilterForm
-        return context
 
 
 

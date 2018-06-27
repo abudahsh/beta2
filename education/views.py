@@ -29,3 +29,19 @@ class UserCreateStudentView(CreateView):
     def form_valid(self, form):
         form.instance.user=self.request.user
         return super(UserCreateStudentView, self).form_valid(form)
+
+
+
+class StudentCourseInfoView(TemplateView):
+
+    template_name = 'student_course_info.html'
+    def get_context_data(self, **kwargs):
+
+        context=super().get_context_data(**kwargs)
+        context['course']=course=get_object_or_404(Course, pk=self.kwargs['course_pk'])
+        context['student']=student = get_object_or_404(Student, code=self.kwargs['student_code'])
+        context['attendances']=AttendanceRecord.objects.filter(course=course, student=student)
+        context['exams']=exams=Exam.objects.filter(course=course)
+        context['records']=ExamRecord.objects.filter(student=student).filter(
+            exam__course=course)
+        return context

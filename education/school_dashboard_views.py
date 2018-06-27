@@ -38,6 +38,14 @@ class CourseViewForSchool(TemplateView):
         context['form2']=CreateExamForm
         return context
 
+
+
+
+
+
+
+
+
 class AddingStudentView(FormView):
     template_name = 'adding_student.html'
     form_class = AddingStudentForm

@@ -64,7 +64,7 @@
       <form>
         <select class="custom-select" name="menu-course" onChange="window.document.location.href=this.options[this.selectedIndex].value;" value="GO">>
         <option selected>Choose Course</option>
-        {% for course in user.student.courses.all %}
+        {% for course in user.school.courses.all %}
             <option value="{% url 'edu:course_dashboard' course.pk %}">{{course.name}}</option>
             {% empty %}
             <option value="99">You have no courses</option>

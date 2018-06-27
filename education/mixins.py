@@ -5,6 +5,22 @@ from django.shortcuts import get_object_or_404
 
 from education.models import Course, School
 
+
+class DateSearchFilterMixin(object):
+
+    def get_queryset(self):
+        #fetch the queryset of the parent class
+        queryset=super(DateSearchFilterMixin, self).get_queryset()
+
+        #get the q parameters
+        q=self.request.GET.get('q')
+        if q:
+            return queryset.filter(attend_time__gte=q)
+        return queryset
+
+
+
+
 class BaseUserPassesTestMixin(UserPassesTestMixin):
     def test_func(self):
         return True
@@ -95,8 +111,8 @@ class TeacherCannotSeeOtherCoursesDashboardMixin(BaseUserPassesTestMixin):
         else:
             return False
 
-    
-        
+
+
 class CannotSeeOthersCoursesDashboardsMixin(BaseUserPassesTestMixin):
     def test_func(self):
         course_id = self.kwargs.get('course')
