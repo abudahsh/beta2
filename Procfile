@@ -1,1 +1,1 @@
-web: gunicorn rafeki.wsgi
+web: gunicorn beta2.wsgi

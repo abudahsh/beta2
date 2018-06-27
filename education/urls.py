@@ -7,7 +7,7 @@ from education import views
 
 student_urlpattern=[
 
-    url(r'^/$', student_views.StudentCourses.as_view(), name='signed_home'),
+    url(r'^$', student_views.StudentCourses.as_view(), name='signed_home'),
     url(r'^(?P<student_code>\w+)/$', student_views.StudentAllCoursesState.as_view(), name='student_all_courses_state'),
     url(r'^course/(?P<course_pk>\d+)/(?P<student_code>\w+)/report/', student_views.StudentCourseReport.as_view(),name='student_course_report'),
     url(r'^course/(?P<course_pk>\d+)$', student_views.CourseViewForParticipant.as_view(), name='course_dashboard_participant'),
