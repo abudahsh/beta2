@@ -130,7 +130,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 LOGIN_URL='accounts:login'
 LOGOUT_URL='accounts:logout'
-LOGIN_REDIRECT_URL='public:home'
+LOGIN_REDIRECT_URL='edu:signed_home'
 LOGOUT_REDIRECT_URL='edu:not_signed_home'
 
 STATICFILES_DIRS = [

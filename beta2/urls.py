@@ -23,7 +23,7 @@ urlpatterns = [
     url(r'^pub/', include('public.urls', namespace='public')),
     url(r'^admin/', admin.site.urls),
     url(r'^account/', include('accounts.urls', namespace='accounts')),
-    url(r'^edu/', include('education.urls', namespace='edu')),
+    url(r'^', include('education.urls', namespace='edu')),
 
 ]
 if settings.DEBUG:

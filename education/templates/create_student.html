@@ -2,11 +2,17 @@
 
 {% block body %}
 <br>
+
+{% if  request.user.is_authenticated %}
 <div class="container mt-2">
+    <h4>Complete your info to become a student on Rafeki</h4>
 <form method="post">
 {% csrf_token %}
 {{ form.as_p }}
 <button type="submit">Become a Student</button>
 </form>
 </div>
+{% else %}
+    <h3>Please Login First <a href="{% url 'accounts:login'%}">login</a></h3>
+{%endif%}
 {% endblock %}

@@ -25,7 +25,7 @@ class AllCoursesList(ListView):
 class UserCreateStudentView(CreateView):
     form_class = CreateStudentForm
     template_name = 'create_student.html'
-    success_url = reverse_lazy('edu:not_signed_home')
+    success_url = reverse_lazy('edu:signed_home')
     def form_valid(self, form):
         form.instance.user=self.request.user
         return super(UserCreateStudentView, self).form_valid(form)

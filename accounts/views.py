@@ -16,7 +16,7 @@ def registeration(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return redirect('public:home')
+            return redirect('edu:create_student')
     else:
         form = UserCreationForm()
     return render(request, 'register.html', {'form': form})

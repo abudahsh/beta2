@@ -33,7 +33,7 @@ school_urlpattern=[
 general_urlpattern=[
     url(r'^template/$', views.Template.as_view(), name='template'),
     url(r'^student/create/$', views.UserCreateStudentView.as_view(), name='create_student'),
-    url(r'^t/$', views.AllCoursesList.as_view(), name='not_signed_home'),
+    url(r'^$', views.AllCoursesList.as_view(), name='not_signed_home'),
     
     #Student Report for specific course both student , school and parents can access
     url(r'^course/(?P<course_pk>\d+)/(?P<student_code>\w+)/', views.StudentCourseInfoView.as_view(),name='student_course_info'),
